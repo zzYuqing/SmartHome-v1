@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>智能家居管理系统</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+			background: url('images/login/background.jpg') no-repeat center center fixed; 
+			background-size: cover;
+        }
+			/* 返回按钮的样式 */
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 18px; /* Slightly larger font size */
+            color: white; 
+        }
+        
+        /* 返回图标的样式 */
+        .back-icon {
+            height: 24px; /* Adjust the size as needed */
+            width: 24px; /* Adjust the size as needed */
+            margin-right: 8px; /* Space between icon and text */
+        }
+        #videoFeed {
+            border: 3px solid black;
+			transform: scaleX(-1);
+        }
+        #captureButton {
+            margin: 20px;
+            padding: 10px 20px;
+        }
+		#photosContainer {
+            width: 640px;
+            border-top: 3px solid black;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+        }
+        .photo {
+            width: 160px;
+            margin: 5px;
+            border: 2px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<!-- 返回上级页面的链接和图标 -->
+    <a href="javascript:history.back()" class="back-link">
+        <img src="images/house/return.png" alt="Return Icon" class="back-icon">
+        返回
+    </a>
+<div id="videoContainer">
+    <video id="videoFeed" autoplay playsinline></video>
+</div>
+<button id="captureButton">拍照</button>
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+
+<script>
+    let videoStream;
+
+    function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                videoStream = stream;
+                const video = document.getElementById('videoFeed');
+                video.srcObject = stream;
+            })
+            .catch(function(err) {
+                console.error("An error occurred: " + err);
+            });
+    }
+
+    function capturePhoto() {
+        const video = document.getElementById('videoFeed');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1); // 水平镜像canvas画布
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.setTransform(1, 0, 0, 1, 0, 0); // 恢复canvas画布到默认状态
+
+        // 预留接口，发送图片数据到后端
+        canvas.toBlob(function(blob) {
+            const formData = new FormData();
+            formData.append('photo', blob);
+
+            fetch('/api/save-photo', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // 处理后端的响应数据
+                // 在此展示拍摄的照片
+                addPhotoToGallery(canvas.toDataURL('image/jpeg'));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }, 'image/jpeg');
+    }
+
+    function addPhotoToGallery(dataUrl) {
+        const photosContainer = document.getElementById('photosContainer');
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        img.classList.add('photo');
+        photosContainer.appendChild(img);
+    }
+
+    document.getElementById('captureButton').addEventListener('click', capturePhoto);
+
+    startCamera();
+</script>
+
+
+</body>
+</html>

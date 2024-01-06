@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能家居管理系统</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('images/login/background.jpg') no-repeat center center fixed; 
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+	/* 返回按钮的样式 */
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 18px; /* Slightly larger font size */
+            color: white; 
+        }
+        
+        /* 返回图标的样式 */
+        .back-icon {
+            height: 24px; /* Adjust the size as needed */
+            width: 24px; /* Adjust the size as needed */
+            margin-right: 8px; /* Space between icon and text */
+        }
+    .login-container {
+        background-color: #fff;
+        padding: 40px;
+        width: 350px; /* Adjusted width */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
+    .input-group label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .input-group input {
+        width: 90%;
+        padding: 10px 10px 10px 40px;
+        padding-left: 35px; /* Space for icon */
+        font-size: 13px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .input-group img {
+        position: absolute;
+        left: 3%;
+        top: 68%;
+        transform: translateY(-50%);
+        height: 20px;
+        width: 20px;
+    }
+    .home-button {
+        background: linear-gradient(to right, #ff758c, #ff7eb3);
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+    .home-button:hover {
+        opacity: 0.9;
+    }
+    .register-link {
+        color: #708090;
+        text-decoration: none;
+        display: block;
+        margin-top: 20px;
+        font-size: 13px;
+    }
+</style>
+</head>
+<body>
+<!-- 返回上级页面的链接和图标 -->
+    <a href="javascript:history.back()" class="back-link">
+        <img src="images/house/return.png" alt="Return Icon" class="back-icon">
+        返回
+    </a>
+<div class="login-container">
+    <div class="input-group">
+        <label for="home_id">家的编号</label>
+        <input type="text" id="home_id" placeholder="请输入家的编号（第一次添加请输入0）">
+    </div>
+    <div class="input-group">
+        <label for="home_id">家的地址</label>
+        <input type="text" id="home_id" placeholder="请输入家的地址（可选）">
+    </div>
+    <button class="home-button" onclick="add_home()">添加</button>
+    <button class="home-button" onclick="delete_home()">删除</button>
+</div>
+<script>
+    function add_home() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'houseManage.html';
+    }
+    function delete_home() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'houseManage.html';
+    }
+</script>
+
+</body>
+</html>

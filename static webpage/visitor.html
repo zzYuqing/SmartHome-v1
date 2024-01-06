@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能家居管理系统</title>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('images/login/background.jpg') no-repeat center center fixed; 
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+	/* 返回按钮的样式 */
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 18px; /* Slightly larger font size */
+            color: white; 
+        }
+        
+        /* 返回图标的样式 */
+        .back-icon {
+            height: 24px; /* Adjust the size as needed */
+            width: 24px; /* Adjust the size as needed */
+            margin-right: 8px; /* Space between icon and text */
+        }
+    .container {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0 0%;
+    }
+   
+    .function-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 200px; 
+        height: 200px; 
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        margin: 0 20px;
+    }
+    .function-image {
+        width: 80%; /* Adjust the size as needed */
+        height: auto;
+        margin-top: 10px;
+    }
+    .function-number {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    .function-container {
+        display: flex;
+        margin-right: 10%;
+        margin-top: 5%;
+    }
+
+</style>
+</head>
+<body>
+<!-- 返回上级页面的链接和图标 -->
+    <a href="javascript:history.back()" class="back-link">
+        <img src="images/house/return.png" alt="Return Icon" class="back-icon">
+        返回
+    </a>
+<div class="container">
+
+
+    
+<div class="function-container">
+        <div class="function-box" onclick="monitor()">
+            <img src="images/visitor/monitor.png" alt="monitor Icon" class="function-image">
+            <div class="function-number">监控</div>
+        </div>
+        <div class="function-box" onclick="today_visitor()">
+            <img src="images/visitor/today_visitor.png" alt="today_visitor Icon" class="function-image">
+            <div class="function-number">今日访客</div>
+        </div>
+		<div class="function-box" onclick="friends()">
+            <img src="images/visitor/friends.png" alt="friends Icon" class="function-image">
+            <div class="function-number">信任列表</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function monitor() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'monitor.html';
+    }
+	    function today_visitor() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'today_visitor.html';
+    }
+	    function friends() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'friends.html';
+    }
+
+</script>
+</body>
+</html>

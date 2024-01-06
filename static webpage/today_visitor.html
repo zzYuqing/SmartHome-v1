@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>智能家居管理系统</title>
+    <style>
+         body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('images/login/background.jpg') no-repeat center center fixed; 
+        background-size: cover;
+        padding-top: 50px; /* 在顶部添加更多的空间 */
+		}
+		h2 {
+			color: white;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.visitors-table {
+			width: 80%;
+			margin: auto;
+			border-collapse: collapse;
+		}
+        .visitors-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .visitors-table th,
+        .visitors-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .visitors-table th {
+            background-color: #f2f2f2;
+        }
+					/* 返回按钮的样式 */
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 18px; /* Slightly larger font size */
+            color: white; 
+        }
+        
+        /* 返回图标的样式 */
+        .back-icon {
+            height: 24px; /* Adjust the size as needed */
+            width: 24px; /* Adjust the size as needed */
+            margin-right: 8px; /* Space between icon and text */
+        }
+    </style>
+</head>
+<body>
+<!-- 返回上级页面的链接和图标 -->
+    <a href="javascript:history.back()" class="back-link">
+        <img src="images/house/return.png" alt="Return Icon" class="back-icon">
+        返回
+    </a>
+<div>
+<h2>今日访客列表</h2>
+
+<table class="visitors-table">
+    <thead>
+        <tr>
+            <th>访客ID</th>
+            <th>来访时间</th>
+            <th>是否信任</th>
+        </tr>
+    </thead>
+    <tbody id="visitorsBody">
+        <!-- 访客数据将在这里通过JavaScript动态插入 -->
+    </tbody>
+</table>
+
+</div>
+<script>
+    // 假设获取访客列表的后端API是 '/api/visitors'
+    function fetchVisitors() {
+        fetch('/api/visitors')
+            .then(response => response.json())
+            .then(data => {
+                updateVisitorsTable(data.visitors);
+            })
+            .catch(error => console.error('Error fetching visitors:', error));
+    }
+
+    // 更新表格内容
+    function updateVisitorsTable(visitors) {
+        const tbody = document.getElementById('visitorsBody');
+        tbody.innerHTML = ''; // 清空现有的表格内容
+
+        visitors.forEach(visitor => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${visitor.id}</td>
+                <td>${visitor.time}</td>
+                <td>${visitor.trusted ? '是' : '否'}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // 页面加载时获取访客列表
+    window.onload = fetchVisitors;
+</script>
+</body>
+</html>

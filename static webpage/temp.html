@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设备控制界面</title>
+    <style>
+	     elect{
+            margin: 10px;
+            width: 200px;
+        }
+		.visitors-table {
+			width: 80%;
+			margin: auto;
+			border-collapse: collapse;
+		}
+        .visitors-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .visitors-table th,
+        .visitors-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .visitors-table th {
+            background-color: #f2f2f2;
+        }
+			
+		/* 模态窗口的样式 */
+        #modeModal {
+            display: none; /* 初始状态为隐藏 */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* 确保模态窗口在最上面 */
+        }
+
+        /* 背景遮罩的样式 */
+        #modalBackdrop {
+            display: none; /* 初始状态为隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999; /* 确保遮罩在模态窗口下面 */
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <label for="deviceType">设备类型:</label>
+    <select id="deviceType">
+        <option value="">请选择类型</option>
+        <option value="lighting">照明类</option>
+        <option value="curtains">窗帘类</option>
+        <option value="air">空调类</option>
+        <option value="robot">机器人类</option>
+        <option value="cook">厨房类</option>
+        <option value="fun">娱乐类</option>
+        <option value="security">安防类</option>
+        <option value="health">健康类</option>
+        <option value="auto">家居自动化类</option>
+        <!-- 其他类型 -->
+    </select>
+
+    <label for="device">设备:</label>
+    <select id="device">
+        <!-- 设备选项将在这里插入 -->
+    </select>
+
+    <table id="deviceDetails" border="1" class="visitors-table">
+        <thead>
+            <tr>
+                <th>产品名称</th>
+                <th>智能模式</th>
+                <th>购买日期</th>
+                <th>保修日期</th>
+                <th>商家与售后</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 设备详情将在这里插入 -->
+        </tbody>
+		
+    </table>
+	
+    <!-- 模态窗口遮罩 -->
+    <div id="modalBackdrop"></div>
+
+    <!-- 模态窗口 -->
+    <div id="modeModal">
+        <h3>修改模式</h3>
+        <label for="modeSelect">选择模式:</label>
+        <select id="modeSelect">
+            <!-- 模式选项将在这里插入 -->
+        </select>
+        <button onclick="submitNewMode()">提交</button>
+        <button onclick="closeModal()">取消</button>
+    </div>
+
+    <script>
+        const deviceTypes = {
+    lighting: ["吊灯", "台灯", "地灯", "智能LED灯", "智能灯带", "其他"],
+    curtains: ["遮光帘", "透光帘", "其他"],
+    air: ["中央空调", "普通空调", "空气净化器", "加湿器", "除湿器", "暖气片", "其他"],
+    robot: ["扫地机器人", "助理机器人", "宠物机器人", "教育辅助机器人", "其他"],
+    cook: ["智能冰箱", "智能水龙头", "智能料理机", "其他"],
+    fun: ["智能电视", "游戏机", "家庭影院系统", "数字音乐播放器", "智能音箱", "其他"],
+    security: ["智能门锁", "智能车库门控制器", "其他"],
+    health: ["智能健康监测设备", "其他"],
+    auto: ["智能插座", "自动宠物喂食器", "智能浇花系统", "其他"]
+};
+
+        const deviceTypeSelect = document.getElementById('deviceType');
+        const deviceSelect = document.getElementById('device');
+        const deviceDetailsTable = document.getElementById('deviceDetails');
+
+        // 当设备类型改变时更新设备下拉列表
+        deviceTypeSelect.addEventListener('change', function() {
+            const devices = deviceTypes[this.value] || [];
+            deviceSelect.innerHTML = devices.map(device => `<option value="${device}">${device}</option>`).join('');
+            deviceSelect.disabled = !devices.length;
+        });
+
+
+
+    // 当设备改变时更新表格
+    deviceSelect.addEventListener('change', function() {
+        fetchDeviceDetails(deviceTypeSelect.value, this.value).then(details => {
+            const rowsHtml = details.map(detail => `
+                <tr>
+                    <td>${detail.name}</td>
+                    <td>
+                        ${detail.mode}
+                        <button onclick="openModal('${detail.id}')">修改</button>
+                    </td>
+                    <td>${detail.purchaseDate}</td>
+                    <td>${detail.warrantyDate}</td>
+                    <td>${detail.vendor}</td>
+                    <td><button onclick="deleteDevice('${detail.id}')">删除</button></td>
+                </tr>
+            `).join('');
+            deviceDetailsTable.querySelector('tbody').innerHTML = rowsHtml;
+        });
+    });
+        function deleteDevice(deviceId) {
+            // 实现删除设备的逻辑
+            console.log('删除设备', deviceId);
+            // 从表格中移除对应行，发送删除请求到后端...
+        }
+
+        function fetchDeviceDetails(type, name) {
+            // 从后端获取设备详情的示例逻辑
+            console.log('获取设备详情', type, name);
+            // 返回一个Promise，用模拟数据进行演示
+            return Promise.resolve([
+                { id: 'dev123', name: name, mode: '模式A', purchaseDate: '2021-01-01', warrantyDate: '2022-01-01', vendor: '商家A' },
+                // ... 更多设备详情
+            ]);
+        }
+    function openModal(deviceId) {
+        // 显示模态窗口和遮罩层
+        document.getElementById('modalBackdrop').style.display = 'block';
+        document.getElementById('modeModal').style.display = 'block';
+
+        // 从后端加载设备的可用模式
+        fetchDeviceModes(deviceId).then(modes => {
+            const modeSelect = document.getElementById('modeSelect');
+            modeSelect.innerHTML = modes.map(mode => `<option value="${mode}">${mode}</option>`).join('');
+        });
+
+        // 将设备ID存储在模态窗口的数据属性中
+        document.getElementById('modeModal').setAttribute('data-device-id', deviceId);
+    }
+
+    // 提交新模式的函数
+    function submitNewMode() {
+        // 获取选中的模式
+        const selectedMode = document.getElementById('modeSelect').value;
+        const deviceId = document.getElementById('modeModal').getAttribute('data-device-id');
+        
+        // 在这里添加发送到后端的代码
+        console.log('设备ID: ', deviceId, '选中的模式是: ', selectedMode);
+
+        // 关闭模态窗口
+        closeModal();
+    }
+
+    // 关闭模态窗口的函数
+    function closeModal() {
+        document.getElementById('modalBackdrop').style.display = 'none';
+        document.getElementById('modeModal').style.display = 'none';
+    }
+
+
+    // 获取设备模式的示例逻辑
+    function fetchDeviceModes(deviceId) {
+        // 在这里添加从后端获取设备模式的代码
+        console.log('获取设备模式', deviceId);
+        // 返回一个Promise，用模拟数据进行演示
+        return Promise.resolve(['模式A', '模式B', '模式C']);
+    }
+    </script>
+</body>
+</html>

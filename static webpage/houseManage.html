@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能家居管理系统</title>
+<style>
+    body, html {
+        height: 100%;
+        weight: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('images/login/background.jpg') no-repeat center center fixed; 
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+
+    }
+	/* 返回按钮的样式 */
+        .back-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 18px; /* Slightly larger font size */
+            color: white; 
+        }
+        
+        /* 返回图标的样式 */
+        .back-icon {
+            height: 24px; /* Adjust the size as needed */
+            width: 24px; /* Adjust the size as needed */
+            margin-right: 8px; /* Space between icon and text */
+        }
+    .container {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0 0%;
+    }
+    .greeting {
+        font-size: 3em;
+        color: white;
+        text-align: left;
+        margin-left: 5%;
+        margin-top: 5%;
+    }
+    .greeting label{
+        font-size: 2em;
+    }
+    .divider {
+        height: 100vh;
+        width: 2px;
+        background-color: white;
+        margin: 0 2%;
+    }
+    .house-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 200px; 
+        height: 200px; 
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        margin: 0 20px;
+    }
+    .house-image {
+        width: 80%; /* Adjust the size as needed */
+        height: auto;
+        margin-top: 10px;
+    }
+    .house-number {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+    .houses-container {
+        display: flex;
+        margin-right: 10%;
+        margin-top: 5%;
+    }
+    .alter-icon-container {
+        display: flex;
+        align-items: center;
+        color: white;
+        font-size: 1.2em;
+        cursor: pointer;
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+    }
+    .alter-icon {
+        margin-right: 8px;
+    }
+</style>
+</head>
+<body>
+<!-- 返回上级页面的链接和图标 -->
+    <a href="javascript:history.back()" class="back-link">
+        <img src="images/house/exit.png" alt="Exit Icon" class="back-icon">
+        退出账号
+    </a>
+<div class="container">
+    <div class="greeting">
+        <label>Hi</label>
+        <p>用户名</p>
+        <p>欢迎回家😀!</p>
+    </div>
+
+    <div class="divider"></div>
+    
+    <div class="houses-container" onclick="choose_house()">
+        <div class="house-box">
+            <img src="images/house/house.png" alt="House Icon" class="house-image">
+            <div class="house-number">家居号1</div>
+        </div>
+        <div class="house-box" onclick="choose_house()">
+            <img src="images/house/house.png" alt="House Icon" class="house-image">
+            <div class="house-number">家居号2</div>
+        </div>
+    </div>
+</div>
+
+<div class="alter-icon-container" onclick="location.href='houseInfoAlter.html';">
+    <img src="images/house/alter.png" class="alter-icon" alt="Alter Icon" style="width: 24px; height: 24px;">
+    <span>点击此处，修改您的家</span>
+</div>
+<script>
+    function choose_house() {
+        // TODO: 在这里实现用户凭据的检查逻辑
+        // 如果用户凭据有效，或者作为示例直接进行页面跳转
+        window.location.href = 'functionList.html';
+    }
+</script>
+</body>
+</html>
