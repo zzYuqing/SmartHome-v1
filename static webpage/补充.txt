@@ -1,0 +1,20 @@
+根据房屋管理界面的接口文档，我想实现自动查询房间数量的功能：
+
+gpt说，当用户进入 houseManage 页面时，您希望自动发起查询并显示结果。这通常是通过前端代码实现的。以下是实现这一功能的一般步骤：
+页面加载时触发请求：在 houseManage 页面的前端代码中，您可以使用JavaScript（或使用的框架，如React, Vue等）在页面加载或组件挂载时自动发起对 /houseManage/getHouseCount 的请求。
+
+发送HTTP请求：使用JavaScript中的 fetch API或者如 axios 这样的HTTP客户端库来发送请求。例如，当 houseManage 页面加载时，您的代码会向后端的 /houseManage/getHouseCount 发送一个GET请求。
+
+处理响应：一旦后端处理了这个请求并返回了响应，前端需要接收这个响应，并根据返回的数据（如房屋数量）更新页面上的信息。
+
+显示在页面上：通过动态更新DOM，将获得的房屋数目显示在页面上适当的位置。
+举个例子，如果您使用的是React，您可能会在 useEffect 钩子中发起这个请求，然后将结果设置到状态中，状态的变化会引起组件重新渲染，从而显示新的数据。
+useEffect(() => {
+  fetch('/houseManage/getHouseCount')
+    .then(response => response.json())
+    .then(data => {
+      // 更新状态，导致页面更新
+      setHouseCount(data.houseCount);
+    });
+}, []);
+这样，每当用户进入 houseManage 页面时，就会自动发起请求并在页面上显示查询到的房屋数目。这种方法使得用户体验更加流畅，无需手动触发查询。
